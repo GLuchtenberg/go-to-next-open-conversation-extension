@@ -1,0 +1,14 @@
+{
+  "manifest_version": 2,
+  "name": "Github - Next open conversation",
+  "version": "0.0.1",
+  "description": "A extension to help navigate between open conversations on github",
+  "author": "Gabriel Luchtenberg",
+  "content_scripts": [
+    {
+      "matches": ["https://github.com/*/*/pull/*/files"],
+      "js": ["handle.js", "utils.js"],
+      "css": ["style.css"]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+- add readme
+- set the button as disable until the page finishes load
+- check why the button is not rendering when comming from the conversation page
+- add tests
+- to improve the code quality
+- add style to the button
