@@ -31,6 +31,7 @@ const getNextOpenConversation = (divs) => {
 const createBtn = () => {
   const btn = document.createElement("button");
   btn.textContent = "Next open conversation";
+  btn.classList.add("nod-next-open-conversation");
   btn.addEventListener("click", () => {
     const resolveDivs = getResolveDivs();
     const goToDiv = getNextOpenConversation(resolveDivs);
