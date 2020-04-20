@@ -1,20 +1,11 @@
-let cache;
-const getResolveDivs = () => {
-  if (cache) {
-    return cache;
-  }
-  const divs = document.querySelectorAll('[data-resolved="false"]');
-  cache = map(divs, (elem) => ({ count: 0, elem }));
-  return cache;
-};
-
 const getDistTop = (el) => window.pageYOffset + el.getBoundingClientRect().top;
 
 const getCommentBoxDistTop = (el) => {
   const commentBoxHeight = el.querySelector(".review-comment").clientHeight;
-  const a = getDistTop(el);
-  const b = a - commentBoxHeight;
-  return b;
+  const elDistTop = getDistTop(el);
+  const scrollDist = elDistTop - commentBoxHeight;
+
+  return scrollDist;
 };
 
 let lastIdx = 0;
@@ -25,26 +16,49 @@ const getNextOpenConversation = (divs) => {
   } else {
     lastIdx = 0;
   }
+
   return itemToReturn;
 };
 
-const createBtn = () => {
+const createNextConversationBtn = () => {
+  const btnContainer = document.querySelector(".pr-review-tools");
+  if (!btnContainer) {
+    return;
+  }
+
   const btn = document.createElement("button");
   btn.textContent = "Next open conversation";
   btn.classList.add("nod-next-open-conversation");
   btn.addEventListener("click", () => {
     const resolveDivs = getResolveDivs();
-    const goToDiv = getNextOpenConversation(resolveDivs);
+    if (!resolveDivs) {
+      return disableBtn(btn);
+    }
 
+    const divToGo = getNextOpenConversation(resolveDivs);
     window.scrollTo({
-      top: getCommentBoxDistTop(goToDiv.elem),
+      top: getCommentBoxDistTop(divToGo),
       behavior: "smooth",
     });
   });
+  btnContainer.appendChild(btn);
 
   return btn;
 };
 
-const btn = createBtn();
-const btnContainer = document.querySelector(".pr-review-tools");
-btnContainer.appendChild(btn);
+const addCloseConversationEvents = () => {
+  const elems = getResolveDivs();
+  if (!elems) return;
+  map(elems, (item) => {
+    const resolveBtn = getButtonByContent("resolve conversation", item);
+
+    resolveBtn.addEventListener("click", (e) => {
+      clearCache();
+    });
+  });
+};
+
+const exec = (() => {
+  createNextConversationBtn();
+  addCloseConversationEvents();
+})();

@@ -4,3 +4,4 @@
 - add tests
 - to improve the code quality
 - add style to the button
+- update cache everytime a conversation is closed or open (re-create the event listeners)

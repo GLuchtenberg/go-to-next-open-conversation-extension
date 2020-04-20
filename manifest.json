@@ -7,7 +7,7 @@
   "content_scripts": [
     {
       "matches": ["https://github.com/*/*/pull/*/files"],
-      "js": ["handle.js", "utils.js"],
+      "js": ["utils.js", "dom.js", "cache.js", "handle.js"],
       "css": ["style.css"]
     }
   ]
